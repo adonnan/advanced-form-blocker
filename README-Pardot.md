@@ -1,2 +1,0 @@
-## Pardot Integration (Optional)
-

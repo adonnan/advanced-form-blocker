@@ -1,5 +1,7 @@
-## Pardot Integration Layout Template Layout Tab (change YOURBASEURL)
-
+# Pardot Integration
+## Layout Template Layout Tab
+### (change YOURBASEURL)
+```
 <!DOCTYPE html>
 <html>
 <head>
@@ -562,3 +564,4 @@
 </script>
 </body>
 </html>
+```

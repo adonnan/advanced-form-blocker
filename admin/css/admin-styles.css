@@ -1,0 +1,31 @@
+/* Use the ID of the table row which is often section_id-field_id */
+/* In our case, it's gf_domain_blocker_section-gf_domain_blocker_textarea */
+#gf_domain_blocker_section-gf_domain_blocker_textarea th {
+    display: none; /* Hide the table header cell containing the original label */
+}
+
+/* Optional: Adjust the padding of the td cell for better spacing after hiding the th */
+#gf_domain_blocker_section-gf_domain_blocker_textarea td {
+    padding-left: 10px; /* Add some space to the left */
+    display: block; /* Treat the td as a block element to help layout */
+    margin-left: 0;
+}
+
+/* Adjust the label within the td if needed */
+#gf_domain_blocker_section-gf_domain_blocker_textarea td label {
+    display: inline-block; /* Or block, depending on desired layout */
+    margin-bottom: 5px; /* Space between label and textarea */
+}
+
+
+
+.gform-settings__wrapper .button {
+    background: #FF5733;
+    border: 1px solid #3e7da6;
+    border-radius: 3px;
+    box-shadow: 0 2px 1px rgba(28, 31, 63, .0634624);
+    font-size: .875rem;
+    height: 2.3125rem;
+    line-height: .875rem;
+    padding: .625rem 1.125rem;
+}

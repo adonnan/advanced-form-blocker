@@ -211,7 +211,7 @@
 
     %%form-javascript-link-target-top%%
 
-    <!-- ADVANCED FORMS BLOCKER SCRIPT -->
+       <!-- ADVANCED FORMS BLOCKER SCRIPT -->
     <script type="text/javascript">
     // Ensure this script runs after jQuery is loaded (Pardot layout templates typically include jQuery)
     if (typeof jQuery !== 'undefined') {
@@ -219,25 +219,24 @@
             console.log('Advanced Forms Blocker: Pardot Script Initializing.');
 
             // --- CONFIGURATION: User needs to update these ---
-            const YOUR_WORDPRESS_SITE_BASE_URL = 'https://your-wp-domain.com'; // E.g., 'https://example.com'
-            const YOUR_API_KEY = 'PASTE_YOUR_API_KEY_HERE'; // Get this from WordPress Settings > Form Blocker
+            const YOUR_WORDPRESS_SITE_BASE_URL = 'https://your-wp-domain.com'; // CONFIRMED
+            const YOUR_API_KEY = 'PASTE_YOUR_API_KEY_HERE';     // CONFIRMED
             // --- END CONFIGURATION ---
 
             const wordpressApiUrlBase = YOUR_WORDPRESS_SITE_BASE_URL.replace(/\/+$/, "") + '/wp-json/afb/v1/list';
             let blockedDomains = [];
             let blockedEmails = [];
             let customMessages = {
-                blocked_email: 'This email address is not allowed for submission.', // Default
-                blocked_domain: 'Submissions from this email domain are not allowed.' // Default
+                blocked_email: 'This email address is not allowed for submission.',
+                blocked_domain: 'Submissions from this email domain are not allowed.'
             };
             let blocklistLoaded = false;
-            const form = $('#pardot-form'); // Ensure your Pardot form has id="pardot-form"
+            const form = $('#pardot-form');
 
-            // Function to fetch the blocklist from the WordPress API
             function fetchBlocklist() {
                 console.log('Advanced Forms Blocker: Fetching blocklist...');
                 if (!YOUR_API_KEY || YOUR_API_KEY === 'PASTE_YOUR_API_KEY_HERE') {
-                    console.error('Advanced Forms Blocker: API Key not configured in Pardot script. Validation disabled.');
+                    console.error('Advanced Forms Blocker: API Key not configured. Validation disabled.');
                     blocklistLoaded = false;
                     return;
                 }
@@ -248,124 +247,132 @@
                 }
 
                 const fullApiUrl = wordpressApiUrlBase + '?key=' + YOUR_API_KEY;
+                console.log('Advanced Forms Blocker: Attempting to fetch from:', fullApiUrl); // Log the URL
 
                 $.ajax({
                     url: fullApiUrl,
                     method: 'GET',
                     dataType: 'json',
-                    timeout: 8000,
+                    timeout: 10000, // Increased timeout slightly
                     success: function(data) {
-                        console.log('Advanced Forms Blocker: API success. Data received:', data);
+                        console.log('Advanced Forms Blocker: API success. Data received:', JSON.stringify(data)); // Stringify for better object logging
                         if (data && Array.isArray(data.domains) && Array.isArray(data.emails) && data.messages && typeof data.messages === 'object') {
                             blockedDomains = data.domains.map(domain => domain.toLowerCase());
-                            blockedEmails = data.emails.map(email => email.toLowerCase()); // Also lowercase blocked emails for consistent checking
+                            blockedEmails = data.emails.map(email => email.toLowerCase());
                             
-                            // Use messages from API if available, otherwise keep defaults
                             customMessages.blocked_email = data.messages.blocked_email || customMessages.blocked_email;
                             customMessages.blocked_domain = data.messages.blocked_domain || customMessages.blocked_domain;
 
                             blocklistLoaded = true;
-                            console.log('Advanced Forms Blocker: Blocklist and messages loaded successfully.');
-                            console.log('Domains:', blockedDomains, 'Emails:', blockedEmails, 'Messages:', customMessages);
+                            console.log('Advanced Forms Blocker: Blocklist loaded. Domains:', blockedDomains.length, 'Emails:', blockedEmails.length, 'Messages:', customMessages);
                         } else {
                             console.error('Advanced Forms Blocker: Invalid data format from API.', data);
                             blocklistLoaded = false;
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-                        console.error('Advanced Forms Blocker: Error fetching blocklist. Status: ' + textStatus + ', Error: ' + errorThrown, jqXHR.responseText);
+                        console.error('Advanced Forms Blocker: Error fetching blocklist. Status: ' + textStatus + ', Error: ' + errorThrown + ', Response:', jqXHR.responseText);
                         blocklistLoaded = false;
                     }
                 });
             }
 
-            fetchBlocklist(); // Fetch on page load
+            fetchBlocklist();
 
-            // Function to display validation errors
             function showBlockError(message, fieldElement) {
-                const fieldId = fieldElement.attr('id') || fieldElement.attr('name'); // Pardot might not always have ID
-                const errorDivId = 'custom_error_for_' + fieldId.replace(/[^a-zA-Z0-9_]/g, '_'); // Sanitize ID for selector
+                const fieldIdRaw = fieldElement.attr('id') || fieldElement.attr('name');
+                if (!fieldIdRaw) { // If field has no id or name, cannot create specific error div
+                    console.warn('Advanced Forms Blocker: Email field has no ID or Name. Cannot show specific error.');
+                    // Optionally, show a general error message above the form here
+                    const generalErrorArea = form.find('p.errors');
+                    if (generalErrorArea.length && !generalErrorArea.is(':visible')) {
+                        generalErrorArea.text(message).show();
+                    } else if (generalErrorArea.length) {
+                        generalErrorArea.html(generalErrorArea.html() + '<br>' + message);
+                    }
+                    fieldElement.css('border-color', '#c0392b'); // Still highlight field
+                    return;
+                }
+                const errorDivId = 'custom_error_for_' + fieldIdRaw.replace(/[^a-zA-Z0-9_]/g, '_');
                 let errorArea = $('#' + errorDivId);
 
-                if (!errorArea.length) { // If specific error div doesn't exist, create it after the field's parent <p>
-                    // This is a fallback, ideally the div is in the HTML structure as per your %%form-loop-fields%%
-                    console.warn('Advanced Forms Blocker: Error div ' + errorDivId + ' not found. Appending dynamically.');
+                if (!errorArea.length) {
                     fieldElement.closest('p.form-field').after('<div id="' + errorDivId + '" class="pardot-block-error-message" style="display:none;"></div>');
                     errorArea = $('#' + errorDivId);
                 }
                 
                 errorArea.text(message).addClass('pardot-block-error-message').show();
-                fieldElement.css('border-color', '#c0392b'); // Highlight field
+                fieldElement.css('border-color', '#c0392b');
             }
 
-            // Function to clear validation errors
             function clearBlockError(fieldElement) {
-                const fieldId = fieldElement.attr('id') || fieldElement.attr('name');
-                const errorDivId = 'custom_error_for_' + fieldId.replace(/[^a-zA-Z0-9_]/g, '_');
+                const fieldIdRaw = fieldElement.attr('id') || fieldElement.attr('name');
+                if (!fieldIdRaw) return;
+                const errorDivId = 'custom_error_for_' + fieldIdRaw.replace(/[^a-zA-Z0-9_]/g, '_');
                 $('#' + errorDivId).text('').hide().removeClass('pardot-block-error-message');
-                fieldElement.css('border-color', ''); // Remove highlight
+                fieldElement.css('border-color', '');
             }
 
-            // Form submission handler
             form.on('submit', function(e) {
                 console.log('Advanced Forms Blocker: Form submit triggered.');
                 if (!blocklistLoaded) {
-                    console.warn('Advanced Forms Blocker: Blocklist not loaded. Allowing submission (or relying on server-side if any).');
-                    return true; // Allow submission if list isn't ready
-                }
-
-                // Find the primary email field. Adjust selector if needed for your specific Pardot form fields.
-                // Common Pardot email field names often contain 'email'.
-                const emailField = form.find('input[type="email"], input[name*="email"]').first(); 
-                if (!emailField.length) {
-                    console.warn('Advanced Forms Blocker: Email field not found in form. Skipping client-side validation.');
+                    console.warn('Advanced Forms Blocker: Blocklist not loaded. Form submission allowed by script (Pardot may still validate).');
                     return true;
                 }
 
-                const emailValue = emailField.val().trim().toLowerCase(); // Trim and lowercase for comparison
-                clearBlockError(emailField); // Clear previous errors for this field
+                // *** UPDATED EMAIL FIELD SELECTOR ***
+                const emailField = form.find('p.form-field.email input[type="text"]').first(); 
+                // This looks for an input type="text" inside a p tag with classes "form-field" and "email"
+
+                if (!emailField.length) {
+                    console.warn('Advanced Forms Blocker: Email field not found using selector "p.form-field.email input[type=\'text\']". Skipping client-side validation.');
+                    return true;
+                }
+                console.log('Advanced Forms Blocker: Email field found:', emailField.attr('name'));
+
+
+                const emailValue = emailField.val().trim().toLowerCase();
+                clearBlockError(emailField);
 
                 if (!emailValue) {
                     console.log('Advanced Forms Blocker: Email field is empty.');
-                    return true; // Allow submission if email is empty (Pardot handles required)
+                    return true;
                 }
 
                 let isBlocked = false;
                 let blockMessage = '';
 
-                // Check against blocked emails
                 if (blockedEmails.includes(emailValue)) {
                     isBlocked = true;
                     blockMessage = customMessages.blocked_email;
-                    console.log('Advanced Forms Blocker: Email blocked (direct match).', emailValue);
+                    console.log('Advanced Forms Blocker: Email blocked (direct match):', emailValue);
                 }
 
-                // Check against blocked domains if not already blocked by email
                 if (!isBlocked) {
                     const emailParts = emailValue.split('@');
                     if (emailParts.length === 2) {
-                        const domain = emailParts[1]; // Domain is already lowercased from blockedDomains list
+                        const domain = emailParts[1]; // domain is already lowercased from fetchBlocklist
                         if (blockedDomains.includes(domain)) {
                             isBlocked = true;
                             blockMessage = customMessages.blocked_domain;
-                            console.log('Advanced Forms Blocker: Domain blocked.', domain);
+                            console.log('Advanced Forms Blocker: Domain blocked:', domain);
                         }
                     }
                 }
 
                 if (isBlocked) {
-                    e.preventDefault(); // Stop form submission
+                    e.preventDefault();
                     showBlockError(blockMessage, emailField);
-                    console.log('Advanced Forms Blocker: Submission prevented.');
+                    console.log('Advanced Forms Blocker: Submission prevented for:', emailValue);
                     return false;
                 }
 
-                console.log('Advanced Forms Blocker: Submission allowed.');
-                return true; // Allow submission
+                console.log('Advanced Forms Blocker: Submission allowed for:', emailValue);
+                return true;
             });
 
-            // Optional: Validate on blur for earlier feedback
-            form.on('blur', 'input[type="email"], input[name*="email"]', function() {
+            // Optional: Validate on blur
+            form.on('blur', 'p.form-field.email input[type="text"]', function() { // *** UPDATED BLUR SELECTOR ***
                 if (!blocklistLoaded) return;
 
                 const emailField = $(this);
@@ -395,7 +402,7 @@
                     showBlockError(blockMessage, emailField);
                 }
             });
-        }); // End jQuery(document).ready()
+        });
     } else {
         console.error('Advanced Forms Blocker: jQuery not loaded. Pardot script will not run.');
     }

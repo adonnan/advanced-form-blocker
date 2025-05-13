@@ -5,11 +5,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <base href="https://YOURBASEURL">
+    <base href="YOURBASEURL">
     <meta charset="utf-8"/>
     <meta name="description" content="%%description%%"/>
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
     <title>%%title%%</title>
+
+    <!-- LOAD JQUERY HERE -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -511,7 +514,6 @@
 
 </div><!-- /.page-wrapper -->
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- Bootstrap JS can be removed if no Bootstrap JS components (like modals, dropdowns) are used -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 <script>

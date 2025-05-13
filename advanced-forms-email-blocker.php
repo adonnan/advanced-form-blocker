@@ -1,7 +1,6 @@
 <?php
 /**
  * Plugin Name: Advanced Form Blocker
- * Plugin URI: https://i.andrewdonnan.com/development
  * Description: Blocks form submissions based on a JSON blocklist and provides a secure API for external list access.
  * Version: 1.1.0
  * Author: Andrew Donnan

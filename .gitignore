@@ -1,2 +1,67 @@
-admin/.DS_Store
+# Dependencies
+# Ignore Composer's vendor directory
+vendor/
+
+# Ignore Node.js modules directory
+node_modules/
+
+# Build files & Artifacts
+# Ignore common build output directories
+build/
+dist/
+# Ignore packaged plugin files (zips, tarballs, etc.)
+*.zip
+*.tar.gz
+*.rar
+*.tgz
+
+# Log files
+# Ignore general log files
+*.log
+# Ignore npm debug logs
+npm-debug.log*
+# Ignore Yarn error logs
+yarn-error.log
+# Ignore PHP error logs (if generated locally within plugin dir)
+error_log
+php_errorlog
+debug.log
+
+# Operating System generated files
+# Ignore macOS specific files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+# Ignore Windows specific files
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# IDE / Editor specific files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+nbproject/ # NetBeans
+*.swp # Vim swap files
+*~ # Backup files
+
+# WordPress specific (if your plugin generates these within its own directory)
+# For example, if your plugin has its own internal cache or temporary files.
+# Most of the general wp-content/ paths from your list are for when the repo
+# is the entire WordPress site, not just the plugin.
+# wp-config.php should NEVER be in a plugin repository.
+
+# If your plugin uses WP-CLI for scaffolding or other tools generate these:
+phpcs.xml.dist
+phpunit.xml.dist
+.travis.yml
+.phpcs.xml
+
+# Sass cache
+.sass-cache/
+
+# Grunt/Gulp temporary files
+.grunt/

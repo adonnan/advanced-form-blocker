@@ -1,13 +1,18 @@
 <?php
 /**
  * Plugin Name: Advanced Form Blocker
- * Description: Blocks form submissions based on a JSON blocklist and provides a secure API for external list access.
- * Version: 1.1.0
+ * Plugin URI: https://github.com/adonnan/advanced-forms-blocker
+ * Description: A WordPress add-on plugin for Gravity Forms to block form submissions from unwanted email addresses and domains, with a secure API for external list access.
+ * Version: 1.0.0
  * Author: Andrew Donnan
  * Author URI: https://i.andrewdonnan.com/development
  * License: GPLv2 or later
  * Text Domain: advanced-form-blocker
  * Domain Path: /languages
+* Requires at least: 5.2
+ * Requires PHP:      7.2
+ * GitHub Plugin URI: adonnan/advanced-forms-blocker
+ * Release Asset:     true
  */
 
 // Prevent direct access to the file

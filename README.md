@@ -24,7 +24,7 @@ Advanced Forms Blocker helps you maintain cleaner form submissions by preventing
 ## Installation
 
 1.  **Download:**
-    *   Download the latest release `.zip` file from the [GitHub Releases page](https://github.com/adonnan/advanced-forms-blocker-public/releases) (Replace placeholders).
+    *   Download the latest release `.zip` file from the [GitHub Releases page](https://github.com/adonnan/advanced-forms-blocker-public/releases).
     *   OR, clone the repository: `git clone https://github.com/adonnan/[advanced-forms-blocker-public.git`
 2.  **Upload to WordPress:**
     *   **Via WordPress Admin:**
@@ -89,11 +89,11 @@ The primary purpose of the REST API is to allow trusted external systems (like a
     `https://yourdomain.com/wp-json/afb/v1/list?key=YOUR_ACTUAL_API_KEY`
 3.  **Provide this URL to your external system or script.**
     *   **For Pardot (Salesforce Marketing Cloud Account Engagement), HubSpot, or other CRMs:**
-        *   **Manual Import:** An administrator can access the API URL in a browser or tool like Postman to download the JSON data. This data can then be manually imported into the CRM's suppression list or used to build segmentation rules.
         *   **Automated Sync (Recommended for dynamic updates):** A developer can create a server-side script (e.g., a scheduled cron job, a cloud function) that:
             1.  Periodically calls your plugin's API endpoint using the API key.
             2.  Parses the returned JSON (domains, emails, and messages).
             3.  Uses the CRM's API to update a suppression list, dynamic list, or perform other actions based on the blocklist data.
+            4.  A script can live on the landing page template, preventing any address or domain listed from submitting the form.
     *   **Important:** The API key should be treated as a secret. Do not expose it in public client-side code.
 
 The API will return a JSON response like this:

@@ -33,7 +33,7 @@ Advanced Form Blocker helps you maintain cleaner form submissions by preventing 
         3.  Choose the downloaded `.zip` file and click "Install Now".
     *   **Via FTP:**
         1.  Unzip the downloaded file.
-        2.  Upload the `advanced-forms-blocker` (or your plugin's folder name) directory to the `/wp-content/plugins/` directory on your server.
+        2.  Upload the `advanced-form-blocker` (or your plugin's folder name) directory to the `/wp-content/plugins/` directory on your server.
 3.  **Activate:**
     *   Go to "Plugins" in your WordPress dashboard.
     *   Find "Advanced Form Blocker" and click "Activate".

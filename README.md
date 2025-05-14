@@ -1,11 +1,11 @@
-# Advanced Forms Blocker for WordPress
+# Advanced Form Blocker for WordPress
 
 **A WordPress plugin to block form submissions from unwanted email addresses and domains, with a secure API for external list access.**
 
 [![License: GPL v2 or later](https://img.shields.io/badge/license-GPL--2.0%2B-blue.svg?style=flat-square)](https://www.gnu.org/licenses/gpl-2.0.html)
 <!-- Add other badges if you have them, e.g., version, build status -->
 
-Advanced Forms Blocker helps you maintain cleaner form submissions by preventing entries from specified email addresses or entire domains. It's designed to integrate with popular WordPress form plugins (starting with Gravity Forms) and offers a secure way for external systems like CRMs (e.g., Pardot/Salesforce Marketing Cloud Account Engagement, HubSpot) to consume your blocklist.
+Advanced Form Blocker helps you maintain cleaner form submissions by preventing entries from specified email addresses or entire domains. It's designed to integrate with popular WordPress form plugins (starting with Gravity Forms) and offers a secure way for external systems like CRMs (e.g., Pardot/Salesforce Marketing Cloud Account Engagement, HubSpot) to consume your blocklist.
 
 ## Features
 
@@ -24,8 +24,8 @@ Advanced Forms Blocker helps you maintain cleaner form submissions by preventing
 ## Installation
 
 1.  **Download:**
-    *   Download the latest release `.zip` file from the [GitHub Releases page](https://github.com/adonnan/advanced-forms-blocker-public/releases).
-    *   OR, clone the repository: `git clone https://github.com/adonnan/[advanced-forms-blocker-public.git`
+    *   Download the latest release `.zip` file from the [GitHub Releases page](https://github.com/adonnan/advanced-form-blocker/releases).
+    *   OR, clone the repository: `git clone https://github.com/adonnan/[advanced-form-blocker.git`
 2.  **Upload to WordPress:**
     *   **Via WordPress Admin:**
         1.  Go to "Plugins" > "Add New" in your WordPress dashboard.
@@ -36,7 +36,7 @@ Advanced Forms Blocker helps you maintain cleaner form submissions by preventing
         2.  Upload the `advanced-forms-blocker` (or your plugin's folder name) directory to the `/wp-content/plugins/` directory on your server.
 3.  **Activate:**
     *   Go to "Plugins" in your WordPress dashboard.
-    *   Find "Advanced Forms Blocker" and click "Activate".
+    *   Find "Advanced Form Blocker" and click "Activate".
 
 ## Configuration
 

@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2025-05-14
 
 ### Added
-- Initial release of Advanced Forms Blocker.
+- Initial release of Advanced Form Blocker.
 - Block form submissions by specific email addresses.
 - Block form submissions by entire domains.
 - JSON blocklist management via WordPress admin upload.
